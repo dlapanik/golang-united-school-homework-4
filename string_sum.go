@@ -44,7 +44,7 @@ func StringSum(input string) (output string, err error) {
 		return makeMath("-"+splited[1], splited[2], minus)
 	}
 
-	return result, fmt.Errorf("number of arguments is wrong: %w", errorNotTwoOperands)
+	return "", fmt.Errorf("number of arguments is wrong: %w", errorNotTwoOperands)
 }
 
 func plus(i1, i2 int) int {
