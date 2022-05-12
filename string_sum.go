@@ -2,6 +2,9 @@ package string_sum
 
 import (
 	"errors"
+	"fmt"
+	"strconv"
+	"strings"
 )
 
 //use these errors as appropriate, wrapping them with fmt.Errorf function
@@ -23,5 +26,45 @@ var (
 // Use the errors defined above as described, again wrapping into fmt.Errorf
 
 func StringSum(input string) (output string, err error) {
-	return "", nil
+
+	result := strings.ReplaceAll(input, " ", "")
+	if len(result) < 1 {
+		return "", errorEmptyInput
+	}
+
+	splited := strings.Split(result, "+")
+	if len(splited) == 2 {
+		return makeMath(splited[0], splited[1], plus)
+	}
+
+	splited = strings.Split(result, "-")
+	if len(splited) == 2 {
+		return makeMath(splited[0], splited[1], minus)
+	} else if len(splited) == 3 && len(splited[0]) == 0 {
+		return makeMath("-"+splited[1], splited[2], minus)
+	}
+
+	return result, nil
+}
+
+func plus(i1, i2 int) int {
+	return i1 + i2
+}
+
+func minus(i1, i2 int) int {
+	return i1 - i2
+}
+
+func makeMath(s1, s2 string, operation func(int, int) int) (string, error) {
+	i1, err := strconv.Atoi(s1)
+	if err != nil {
+		return "", fmt.Errorf("cannot parse first argument: %w", errorNotTwoOperands)
+	}
+
+	i2, err := strconv.Atoi(s2)
+	if err != nil {
+		return "", fmt.Errorf("cannot parse second argument: %w", errorNotTwoOperands)
+	}
+
+	return strconv.Itoa(operation(i1, i2)), nil
 }
