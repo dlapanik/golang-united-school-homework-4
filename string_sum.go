@@ -29,7 +29,7 @@ func StringSum(input string) (output string, err error) {
 
 	result := strings.ReplaceAll(input, " ", "")
 	if len(result) < 1 {
-		return "", errorEmptyInput
+		return "", fmt.Errorf("empty input: %w", errorEmptyInput)
 	}
 
 	splited := strings.Split(result, "+")
@@ -58,12 +58,12 @@ func minus(i1, i2 int) int {
 func makeMath(s1, s2 string, operation func(int, int) int) (string, error) {
 	i1, err := strconv.Atoi(s1)
 	if err != nil {
-		return "", fmt.Errorf("cannot parse first argument: %w", errorNotTwoOperands)
+		return "", fmt.Errorf("invalid syntax: %w", errorNotTwoOperands)
 	}
 
 	i2, err := strconv.Atoi(s2)
 	if err != nil {
-		return "", fmt.Errorf("cannot parse second argument: %w", errorNotTwoOperands)
+		return "", fmt.Errorf("invalid syntax: %w", errorNotTwoOperands)
 	}
 
 	return strconv.Itoa(operation(i1, i2)), nil
