@@ -58,12 +58,12 @@ func minus(i1, i2 int) int {
 func makeMath(s1, s2 string, operation func(int, int) int) (string, error) {
 	i1, err := strconv.Atoi(s1)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("invalid syntax: %w", err)
 	}
 
 	i2, err := strconv.Atoi(s2)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("invalid syntax: %w", err)
 	}
 
 	return strconv.Itoa(operation(i1, i2)), nil
